@@ -1,8 +1,13 @@
+import { authService } from "firebase_im";
 import React, { useState } from "react";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Auth = () => {
+  const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newAccount, setNewAccount] = useState(true);
+  const [error, setError] = useState("");
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -13,15 +18,28 @@ const Auth = () => {
       setPassword(value);
     }
   };
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
+    try {
+      let data;
+      if (newAccount) {
+        const data = await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        const data = await signInWithEmailAndPassword(auth, email, password);
+      }
+      console.log(data);
+    } catch (error) {
+      setError(error.message);
+    }
   };
+  const toggleAccount = () => setNewAccount((prev) => !prev);
+
   return (
     <div>
       <form onSubmit={onSubmit}>
         <input
           name='email'
-          type='text'
+          type='email'
           placeholder='Email'
           value={email}
           onChange={onChange}
@@ -35,8 +53,10 @@ const Auth = () => {
           onChange={onChange}
           required
         />
-        <input type='submit' value='Log In' />
+        <input type='submit' value={newAccount ? "Create Account" : "Log in"} />
+        {error}
       </form>
+      <span onClick={toggleAccount}>{newAccount ? "Sign in" : "Create Account"}</span>
       <div>
         <button>Continue with Google</button>
         <button>Continue with GitHub</button>
