@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "firebase_im";
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, onSnapshot, orderBy } from "firebase/firestore";
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [post, setPost] = useState("");
   const [posts, setPosts] = useState([]);
-  const getPosts = async () => {
-    const q = query(collection(dbService, "post-with"));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      const postObj = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setPosts((prev) => [postObj, ...prev]);
-    });
-  };
+
   useEffect(() => {
-    getPosts();
+    const q = query(collection(dbService, "post-with"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const postArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPosts(postArr);
+    });
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
     const docRef = await addDoc(collection(dbService, "post-with"), {
-      post,
+      text: post,
       createdAt: Date.now(),
+      creatorId: userObj.uid,
     });
     setPost("");
   };
@@ -46,9 +44,9 @@ const Home = () => {
         <input type='submit' value='Post' />
       </form>
       <div>
-        {posts.reverse().map((post) => (
+        {posts.map((post) => (
           <div key={post.id}>
-            <h4>{post.post}</h4>
+            <h4>{post.text}</h4>
           </div>
         ))}
       </div>
