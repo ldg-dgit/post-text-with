@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import { dbService } from "firebase_im";
+import { addDoc, collection } from "firebase/firestore";
 
 const Home = () => {
   const [post, setPost] = useState("");
-  const onSubmit = (event) => {
-    event.pventDefault();
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const docRef = await addDoc(collection(dbService, "post-with"), {
+      post,
+      createdAt: Date.now(),
+    });
+    setPost("");
   };
   const onChange = (event) => {
     const {
