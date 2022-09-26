@@ -8,7 +8,6 @@ const Post = ({ postObj, isOwner }) => {
   const postTextRef = doc(dbService, "post-with", `${postObj.id}`);
   const onDeleteClick = async () => {
     const ok = window.confirm("Are you sure? You want to delete this post?");
-
     if (ok) {
       await deleteDoc(postTextRef);
     }
