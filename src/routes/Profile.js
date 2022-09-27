@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { authService, dbService } from "../firebase_im";
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const navigate = useNavigate();
   const auth = getAuth();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
@@ -22,6 +22,7 @@ const Profile = ({ userObj }) => {
     event.preventDefault();
     if (userObj.displayName !== newDisplayName) {
       await updateProfile(userObj, { displayName: newDisplayName });
+      refreshUser();
     }
   };
   /*const getMyPosts = async () => {

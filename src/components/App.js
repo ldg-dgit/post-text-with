@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { authService } from "firebase_im";
 
 function App() {
   const [init, setInit] = useState(false);
@@ -16,9 +17,16 @@ function App() {
       setInit(true);
     });
   }, []);
+  const refreshUser = () => {
+    setUserObj(authService.currentUser);
+  };
   return (
     <>
-      {init ? <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} /> : "Initializing..."}
+      {init ? (
+        <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} />
+      ) : (
+        "Initializing..."
+      )}
       <br />
       <footer>&copy; {new Date().getFullYear()} DGit</footer>
     </>
