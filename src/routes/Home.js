@@ -18,9 +18,9 @@ const Home = ({ userObj }) => {
   }, []);
 
   return (
-    <div>
+    <div className='container'>
       <PostFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {posts.map((post) => (
           <Post key={post.id} postObj={post} isOwner={post.creatorId === userObj.uid} />
         ))}
