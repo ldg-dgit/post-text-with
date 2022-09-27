@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getAuth, signOut, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
-import { authService, dbService } from "../firebase_im";
 
 const Profile = ({ userObj, refreshUser }) => {
   const navigate = useNavigate();
@@ -25,20 +23,6 @@ const Profile = ({ userObj, refreshUser }) => {
       refreshUser();
     }
   };
-  /*const getMyPosts = async () => {
-    const q = query(
-      collection(dbService, "post-with"),
-      where("creatorId", "==", userObj.uid),
-      orderBy("createdAt")
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-    });
-  };
-  useEffect(() => {
-    getMyPosts();
-  }, []);*/
   return (
     <>
       <form onSubmit={onSubmit}>
