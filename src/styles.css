@@ -61,7 +61,7 @@ form {
   text-align: center;
   color: white;
   border-radius: 20px;
-  background-color: #04aaff;
+  background-color: #18a558;
   cursor: pointer;
 }
 
@@ -108,7 +108,7 @@ form {
   height: 40px;
   padding: 0px 20px;
   color: white;
-  border: 1px solid #04aaff;
+  border: 1px solid #18a558;
   border-radius: 20px;
   font-weight: 500;
   font-size: 12px;
@@ -117,7 +117,7 @@ form {
 .factoryInput__arrow {
   position: absolute;
   right: 0;
-  background-color: #04aaff;
+  background-color: #18a558;
   height: 40px;
   width: 40px;
   padding: 10px 0px;
@@ -127,7 +127,7 @@ form {
 }
 
 .factoryInput__label {
-  color: #04aaff;
+  color: #18a558;
   cursor: pointer;
 }
 
@@ -149,7 +149,7 @@ form {
 }
 
 .factoryForm__clear {
-  color: #04aaff;
+  color: #18a558;
   cursor: pointer;
   text-align: center;
 }
@@ -252,7 +252,7 @@ form {
 
 .authSubmit {
   text-align: center;
-  background: #04aaff;
+  background: #18a558;
   color: white;
   margin-top: 10px;
   cursor: pointer;
@@ -266,11 +266,17 @@ form {
 }
 
 .authSwitch {
-  color: #04aaff;
+  color: #18a558;
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 50px;
   display: block;
   font-size: 12px;
   text-decoration: underline;
+}
+
+footer {
+  margin: 50px 0px;
+  width: 100vw;
+  text-align: center;
 }

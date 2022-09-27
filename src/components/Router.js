@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "../components/Navigation";
@@ -7,7 +7,7 @@ import Profile from "../routes/Profile";
 
 const AppRouter = ({ isLoggedIn, userObj, refreshUser, newName }) => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {isLoggedIn && <Navigation userObj={userObj} />}
       <div
         style={{
@@ -34,7 +34,7 @@ const AppRouter = ({ isLoggedIn, userObj, refreshUser, newName }) => {
           )}
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
