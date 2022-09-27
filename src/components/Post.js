@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { dbService } from "firebase_im.js";
+import { dbService, storageService } from "firebase_im.js";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 
 const Post = ({ postObj, isOwner }) => {
   const [editing, setEditing] = useState();
@@ -10,6 +11,7 @@ const Post = ({ postObj, isOwner }) => {
     const ok = window.confirm("Are you sure? You want to delete this post?");
     if (ok) {
       await deleteDoc(postTextRef);
+      await deleteObject(ref(storageService, postObj.attachmentUrl));
     }
   };
   const toggleEditing = () => setEditing((prev) => !prev);
@@ -46,6 +48,7 @@ const Post = ({ postObj, isOwner }) => {
       ) : (
         <>
           <h4>{postObj.text}</h4>
+          {postObj.attachmentUrl && <img src={postObj.attachmentUrl} height='150px' />}
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete</button>
